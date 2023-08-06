@@ -1,9 +1,9 @@
-import BetTable from "./components/BetTable";
+import BetGame from "./routes/BetGame";
 
 export default function App() {
   return (
     <div className="App">
-      <BetTable />
+      <BetGame />
     </div>
   );
 }

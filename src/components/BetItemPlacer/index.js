@@ -16,7 +16,6 @@ export default function BetItemPlacer({
   isRolledDice
 }) {
   if (!diceNumber) return null;
-
   return (
     <BetItemContainer isRolledDice={isRolledDice} >
       <BetAmountHeading>Bet Amount</BetAmountHeading>
