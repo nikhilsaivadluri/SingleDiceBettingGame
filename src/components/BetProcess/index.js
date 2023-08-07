@@ -1,4 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DiceFaces, DiceImages } from "../../Config/Constants";
+import {
+  addBalance,
+  allowBetting,
+  clearBets,
+  stopBetting,
+  updateRolledDiceFace,
+} from "../../actions";
 import {
   BetResult,
   GameProcessContainer,
@@ -7,21 +16,18 @@ import {
   RolledDice,
   RollingDice,
 } from "./styledComponents";
-import { DiceImages, DiceFaces } from "../../Config/Constants";
 
-export default function BetProcess({
-  clearBets,
-  allowBetting,
-  betAmounts,
-  setUserBalance,
-  rolledDiceValue,
-  setRolledDiceValue,
-  userBalance,
-  setAllowBetting,
-}) {
+export default function BetProcess() {
   const [isDiceRolling, setIsDiceRolling] = useState(false);
   const [gameTimingCounter, setGameTimingCounter] = useState(0);
   const gameTimer = useRef(null);
+
+  const betAmounts = useSelector((state) => state.betAmounts);
+  const userBalance = useSelector((state) => state.userBalance);
+  const allowBettingFlag = useSelector((state) => state.allowBetting);
+  const rolledDiceFace = useSelector((state) => state.rolledDiceFace);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     startBetting();
@@ -42,7 +48,7 @@ export default function BetProcess({
       return;
     }
 
-    setAllowBetting(true);
+    dispatch(allowBetting());
     gameTimer.current = setInterval(() => {
       setGameTimingCounter((counter) => counter + 1);
     }, 1000);
@@ -51,12 +57,12 @@ export default function BetProcess({
   const stopBettingAndRollDice = () => {
     if (gameTimer.current) clearInterval(gameTimer.current);
 
-    setAllowBetting(false);
+    dispatch(stopBetting());
     setIsDiceRolling(true);
     setGameTimingCounter(0);
     setTimeout(() => {
       const rolledDice = Math.ceil((Math.random() * 6) | 0);
-      setRolledDiceValue(DiceFaces[rolledDice]);
+      dispatch(updateRolledDiceFace(DiceFaces[rolledDice]));
       setIsDiceRolling(false);
       const winingAmount = betAmounts[DiceFaces[rolledDice]] * 2;
       updateUserBalance(winingAmount);
@@ -69,18 +75,18 @@ export default function BetProcess({
 
   const updateUserBalance = (winingAmount) => {
     setTimeout(() => {
-      setUserBalance((balance) => balance + winingAmount);
+      dispatch(addBalance(winingAmount));
     }, [5000]);
   };
 
   const restartGame = () => {
-    clearBets();
-    setRolledDiceValue(null);
+    dispatch(clearBets());
+    dispatch(updateRolledDiceFace(null));
     startBetting();
   };
 
   const DisplayRolledDice = useCallback(() => {
-    if (allowBetting)
+    if (allowBettingFlag)
       return (
         <PlaceBetText>
           Place your bets... Game starts in {10 - gameTimingCounter}s
@@ -89,21 +95,21 @@ export default function BetProcess({
 
     if (isDiceRolling) return <RollingDice src="/images/rollingDice.gif" />;
 
-    if (rolledDiceValue)
-      return <RolledDice src={`/images/${DiceImages[rolledDiceValue]}`} />;
+    if (rolledDiceFace)
+      return <RolledDice src={`/images/${DiceImages[rolledDiceFace]}`} />;
 
     return null;
-  }, [isDiceRolling, rolledDiceValue, allowBetting, gameTimingCounter]);
+  }, [isDiceRolling, rolledDiceFace, allowBettingFlag, gameTimingCounter]);
 
   return (
     <GameProcessContainer>
       <RoledDiceContainer>
         <DisplayRolledDice />
       </RoledDiceContainer>
-      {rolledDiceValue && (
-        <BetResult won={betAmounts[rolledDiceValue] * 2 !== 0}>
-          {betAmounts[rolledDiceValue] * 2 !== 0
-            ? `You have won $${betAmounts[rolledDiceValue] * 2}`
+      {rolledDiceFace && (
+        <BetResult won={betAmounts[rolledDiceFace] * 2 !== 0}>
+          {betAmounts[rolledDiceFace] * 2 !== 0
+            ? `You have won $${betAmounts[rolledDiceFace] * 2}`
             : "You lost the bets!"}
         </BetResult>
       )}
