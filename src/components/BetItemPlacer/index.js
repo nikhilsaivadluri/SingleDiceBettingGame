@@ -1,4 +1,6 @@
-
+import { useDispatch, useSelector } from 'react-redux';
+import { DiceImages } from "../../Config/Constants";
+import { increaseBet } from "../../actions";
 import {
   BetAmountHeading,
   BetAmountValue,
@@ -6,18 +8,28 @@ import {
   DiceImage,
   IncreaseBetButton
 } from "./styleComponents";
-import { DiceImages } from "../../Config/Constants";
 export default function BetItemPlacer({
   diceNumber,
   diceId,
-  betAmount,
-  increaseBet,
-  allowBetting,
-  isRolledDice
 }) {
+  const betAmount = useSelector((state) => state.betAmounts[diceId]);
+  const userBalance = useSelector((state) => state.userBalance);
+  const rolledDiceFace = useSelector((state) => state.rolledDiceFace);
+  const allowBetting = useSelector((state) => state.allowBetting);
+  const dispatch = useDispatch();
+
   if (!diceNumber) return null;
+
+  const increaseBetClick = () => {
+    if (userBalance > 0) {
+      dispatch(increaseBet(diceId));
+    } else {
+      alert("No balance to place bet");
+    }
+  };
+  
   return (
-    <BetItemContainer isRolledDice={isRolledDice} >
+    <BetItemContainer isRolledDice={rolledDiceFace===diceId} >
       <BetAmountHeading>Bet Amount</BetAmountHeading>
       <BetAmountValue>${betAmount}</BetAmountValue>
       <DiceImage src={`/images/${DiceImages[diceId]}`} alt={diceId} />
@@ -25,7 +37,7 @@ export default function BetItemPlacer({
          color="success"
          variant="contained"
          disabled={!allowBetting}
-         onClick={() => increaseBet(diceId)}>
+         onClick={increaseBetClick}>
         Increase bet $1
       </IncreaseBetButton>
     </BetItemContainer>
