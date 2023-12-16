@@ -3,6 +3,8 @@ on: push
 permissions:
    id-token: write
    pages: write
+environment:
+   name: github-pages
 jobs: 
   cool_first_job:
       runs-on: ubuntu-latest
@@ -60,8 +62,6 @@ jobs:
         - name: Deploy to github pages
           id: deployment
           artifact_name: gh-pages
-          environment:
-             name: gh-pages
           uses: actions/deploy-pages@v2    
     
         # - name: Deploy report to Github Pages
