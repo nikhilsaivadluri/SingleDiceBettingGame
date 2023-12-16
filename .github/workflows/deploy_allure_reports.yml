@@ -1,0 +1,12 @@
+name:  Deploy allure reports
+on: push
+jobs: 
+  cool_first_job:
+      runs-on: ubuntu-latest
+      steps: 
+        - name: LS Output
+          run:  ls
+        - name: Checkout code
+          uses:  actions/checkout@v3
+        - name: Ls output after checkout
+          run: ls
