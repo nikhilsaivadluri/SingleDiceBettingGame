@@ -10,3 +10,9 @@ jobs:
           uses:  actions/checkout@v3
         - name: Ls output after checkout
           run: ls
+        - name: Install Dependencies
+          run: npm install
+        - name: Run Tests with coverage
+          run: npm run test:coverage
+        
+
