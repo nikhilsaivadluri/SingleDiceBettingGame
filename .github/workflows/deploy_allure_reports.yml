@@ -37,29 +37,33 @@ jobs:
         - name: Copy UT coverage and allure coverage reports in one dir
           run: |
             mkdir -p "gh-pages/UT-coverage-report"
-            cp -r coverage/lcov-report/*  "gh-pages/UT-coverage-report"
+            cp -r coverage/lcov-report/*  "gh-pages/UT-coverage-report/"
             mkdir -p "gh-pages/allure-report"
-            cp -r allure-report/* "gh-pages/allure-report"
+            cp -r allure-report/* "gh-pages/allure-report/"
 
         - name: Generate  directory listing for all test reports
-          uses: jayanta525/github-pages-directory-listing@v4.0.0
+          uses: jayanta525/github-pages-directory-listing@v3.0.0
           with:
              FOLDER: gh-pages
 
         - name: Setup pages
           uses: actions/configure-pages@v3
           
-        # - name: Upload artifact
-        #   uses: actions/upload-pages-artifact@v1
-        #   with: 
-        #     path: 'gh-pages'
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v1
+          with: 
+            path: 'gh-pages'
+        
+        - name: Deploy to github pages
+          id: deployment
+          uses: actions/deploy-pages@v2    
     
-        - name: Deploy report to Github Pages
-          if: always()
-          uses: peaceiris/actions-gh-pages@v2
-          env:
-            PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            PUBLISH_BRANCH: gh-pages
-            PUBLISH_DIR: gh-pages
+        # - name: Deploy report to Github Pages
+        #   if: always()
+        #   uses: peaceiris/actions-gh-pages@v2
+        #   env:
+        #     PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #     PUBLISH_BRANCH: gh-pages
+        #     PUBLISH_DIR: gh-pages
         
 
