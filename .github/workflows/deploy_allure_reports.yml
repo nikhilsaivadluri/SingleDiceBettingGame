@@ -1,5 +1,7 @@
 name:  Deploy allure reports
 on: push
+permissions:
+   id-token: write
 jobs: 
   cool_first_job:
       runs-on: ubuntu-latest
