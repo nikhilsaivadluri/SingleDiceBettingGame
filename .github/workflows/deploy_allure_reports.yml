@@ -1,10 +1,17 @@
 name:  Deploy allure reports
-on: push
+on: 
+  push:
+    branches: 
+      - master
+  workflow_dispatch:
+    inputs:
+       branch_name:
+          description: 'Branch to run allure report'
+          required: true
+          default: master      
 permissions:
    id-token: write
    pages: write
-environment:
-   name: github-pages
 jobs: 
   cool_first_job:
       runs-on: ubuntu-latest
