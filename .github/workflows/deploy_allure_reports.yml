@@ -68,7 +68,6 @@ jobs:
         
         - name: Deploy to github pages
           id: deployment
-          artifact_name: gh-pages
           uses: actions/deploy-pages@v2    
     
         # - name: Deploy report to Github Pages
