@@ -70,7 +70,7 @@ jobs:
           uses: JamesIves/github-pages-deploy-action@4.1.4
           with:
              branch: gh-pages # Change this if your GitHub Pages branch is different
-             folder: github-page # Change this to the folder containing your built artifacts 
+             folder: gh-pages # Change this to the folder containing your built artifacts 
     
         # - name: Deploy report to Github Pages
         #   if: always()
