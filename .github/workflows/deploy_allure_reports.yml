@@ -58,29 +58,22 @@ jobs:
           with:
              FOLDER: gh-pages
 
-        - name: LS Output
-          run:  ls     
+  deploy:
+    needs: cool_first_job
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
 
-        # - name: Setup pages
-        #   uses: actions/configure-pages@v3
-          
-        # - name: Upload artifact
-        #   uses: actions/upload-pages-artifact@v1
-        #   with: 
-        #     path: 'gh-pages'
-        
-        - name: Deploy to GitHub Pages
-          uses: JamesIves/github-pages-deploy-action@4.1.4
-          with:
-             branch: gh-pages # Change this if your GitHub Pages branch is different
-             folder: gh-pages # Change this to the folder containing your built artifacts 
-    
-        # - name: Deploy report to Github Pages
-        #   if: always()
-        #   uses: peaceiris/actions-gh-pages@v2
-        #   env:
-        #     PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #     PUBLISH_BRANCH: gh-pages
-        #     PUBLISH_DIR: gh-pages
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
         
 
