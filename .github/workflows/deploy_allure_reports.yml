@@ -58,18 +58,10 @@ jobs:
           with:
              FOLDER: gh-pages
 
-        - name: Setup pages
-          uses: actions/configure-pages@v3
-
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v1
           with:
-            path: 'gh-pages'
-
-        - name: Deploy to gitHub pages
-          id: deployment
-          uses: actions/deploy-pages@v2        
-
+            path: 'gh-pages'   
 
   deploy-coverage:
     runs-on: ubuntu-latest
