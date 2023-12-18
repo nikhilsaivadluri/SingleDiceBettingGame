@@ -1,5 +1,11 @@
 name:  Deploy allure reports
-on: push
+on: 
+  workflow_dispatch:
+    inputs:
+       branch_name:
+          description: 'Branch to run allure report'
+          required: true
+          default: master     
 jobs: 
   cool_first_job:
       runs-on: ubuntu-latest
