@@ -58,13 +58,11 @@ jobs:
           with:
              FOLDER: gh-pages
 
-        - name: checkout to gh-pages
-          uses: actions/checkout@v3
-          if: always()
-          continue-on-error: true
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v1
           with:
-            ref: gh-pages
-            path: gh-pages
+           # Upload generator folder
+           path: 'gh-pages'
 
   deploy:
     needs: cool_first_job
