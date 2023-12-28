@@ -1,4 +1,4 @@
-name:  Deploy allure reports
+name:  Deploy allure reports -without listing
 on: 
   workflow_dispatch:
     inputs:

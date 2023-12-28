@@ -1,4 +1,4 @@
-name:  Deploy allure reports
+name:  New allure reports
 on: 
   workflow_dispatch:
     inputs:
@@ -31,6 +31,13 @@ jobs:
         - name: LS Output after coverage
           run:  ls
 
+        - name: upload artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: new-coverage
+            path: gh-pages   
+
+
         - name: Checkout code
           uses:  actions/checkout@v3
           with:
@@ -38,6 +45,14 @@ jobs:
 
         - name: LS output after checkout to gh-pages
           run:  ls            
+
+        - name: Download  new-coverage    
+          uses: actions/download-artifact@v4
+          with:          
+            name: new-coverage
+
+        - name: LS output after checkout to gh-pages
+          run:  ls  
 
         # - name: Generate  directory listing for all test reports
         #   uses: jayanta525/github-pages-directory-listing@v3.0.0
