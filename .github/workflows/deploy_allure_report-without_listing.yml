@@ -42,10 +42,10 @@ jobs:
 
         - name: Copy UT coverage and allure coverage reports in one dir
           run: |
-            mkdir -p "gh-pages/UT-coverage-report"
-            cp -r coverage/lcov-report/*  "gh-pages/UT-coverage-report"
-            mkdir -p "gh-pages/allure-report"
-            cp -r allure-report/* "gh-pages/allure-report"
+            sudo mkdir -p "gh-pages/UT-coverage-report"
+            sudo cp -r coverage/lcov-report/*  "gh-pages/UT-coverage-report"
+            sudo mkdir -p "gh-pages/allure-report"
+            sudo cp -r allure-report/* "gh-pages/allure-report"
 
         - name: Generate  directory listing for all test reports
           uses: jayanta525/github-pages-directory-listing@v3.0.0
