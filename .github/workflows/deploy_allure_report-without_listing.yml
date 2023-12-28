@@ -46,6 +46,11 @@ jobs:
             cp -r coverage/lcov-report/*  "gh-pages/UT-coverage-report"
             mkdir -p "gh-pages/allure-report"
             cp -r allure-report/* "gh-pages/allure-report"
+
+        - name: Generate  directory listing for all test reports
+          uses: jayanta525/github-pages-directory-listing@v3.0.0
+          with:
+            FOLDER: gh-pages            
     
         - name: Deploy 🚀
           uses: JamesIves/github-pages-deploy-action@v4
