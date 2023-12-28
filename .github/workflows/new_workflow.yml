@@ -1,0 +1,51 @@
+name:  Deploy allure reports
+on: 
+  workflow_dispatch:
+    inputs:
+       branch_name:
+          description: 'Branch to run allure report'
+          required: true
+          default: master     
+jobs: 
+  cool_first_job:
+      runs-on: ubuntu-latest
+      steps: 
+        - name: LS Output
+          run:  ls
+        - name: Checkout code
+          uses:  actions/checkout@v3
+        - name: Ls output after checkout
+          run: ls
+        - name: Install Dependencies
+          run: npm install
+        - name: Run Tests with coverage
+          run: npm run test:coverage
+          continue-on-error: true
+
+
+        - name: Copy UT coverage and allure coverage reports in one dir
+          run: |
+            sudo mkdir -p "gh-pages/UT-coverage-report-new"
+            sudo cp -r coverage/lcov-report/*  "gh-pages/UT-coverage-report-new"
+
+        - name: LS Output after coverage
+          run:  ls
+
+        - name: Checkout code
+          uses:  actions/checkout@v3
+          with:
+            ref: gh-pages
+
+        - name: LS output after checkout to gh-pages
+          run:  ls            
+
+        # - name: Generate  directory listing for all test reports
+        #   uses: jayanta525/github-pages-directory-listing@v3.0.0
+        #   with:
+        #     FOLDER: gh-pages            
+    
+        # - name: Deploy 🚀
+        #   uses: JamesIves/github-pages-deploy-action@v4
+        #   with:
+        #     folder: gh-pages # The folder the action should deploy.
+        
