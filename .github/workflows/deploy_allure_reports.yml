@@ -1,8 +1,5 @@
 name:  Deploy allure reports
 on: 
-  push:
-    branches: 
-      - master
   workflow_dispatch:
     inputs:
        branch_name:
