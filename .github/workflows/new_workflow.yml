@@ -62,8 +62,8 @@ jobs:
         #   with:
         #     FOLDER: gh-pages            
     
-        # - name: Deploy 🚀
-        #   uses: JamesIves/github-pages-deploy-action@v4
-        #   with:
-        #     folder: gh-pages # The folder the action should deploy.
+        - name: Deploy 🚀
+          uses: JamesIves/github-pages-deploy-action@v4
+          with:
+            folder: UT-coverage-report-new # The folder the action should deploy.
         
