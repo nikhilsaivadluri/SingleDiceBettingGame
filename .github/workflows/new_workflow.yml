@@ -43,6 +43,7 @@ jobs:
              REPO: self
              BRANCH: gh-pages
              FOLDER: gh-pages/UT-coverage-report-new
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 #   Deploy:
 #     needs: [cool_first_job]
