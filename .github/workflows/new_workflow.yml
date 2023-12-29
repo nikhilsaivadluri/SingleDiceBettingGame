@@ -37,33 +37,29 @@ jobs:
             name: new-coverage
             path: gh-pages   
 
-  Deploy:
-    needs: [cool_first_job]
-    runs-on: ubuntu-latest
-    steps: 
-        - name: Checkout code
-          uses:  actions/checkout@v3
-          with:
-            ref: gh-pages
+        - name: publish to gh-pages 
+          uses: s0/git-publish-subdir-action@develop
+          env:
+             REPO: self
+             BRANCH: gh-pages
+             FOLDER: gh-pages/UT-coverage-report-new
 
-        - name: LS output after checkout to gh-pages
-          run:  ls            
+#   Deploy:
+#     needs: [cool_first_job]
+#     runs-on: ubuntu-latest
+#     steps: 
+#         - name: Checkout code
+#           uses:  actions/checkout@v3
+#           with:
+#             ref: gh-pages
 
-        - name: Download  new-coverage    
-          uses: actions/download-artifact@v4
-          with:          
-            name: new-coverage
+#         - name: LS output after checkout to gh-pages
+#           run:  ls            
 
-        - name: LS output after checkout to gh-pages
-          run:  ls  
+#         - name: Download  new-coverage    
+#           uses: actions/download-artifact@v4
+#           with:          
+#             name: new-coverage
 
-        # - name: Generate  directory listing for all test reports
-        #   uses: jayanta525/github-pages-directory-listing@v3.0.0
-        #   with:
-        #     FOLDER: gh-pages            
-    
-        - name: Deploy 🚀
-          uses: JamesIves/github-pages-deploy-action@v4
-          with:
-            folder: UT-coverage-report-new # The folder the action should deploy.
+
         
